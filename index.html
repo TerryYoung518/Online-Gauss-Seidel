@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Gauss-Seidel</title>
+    <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/grids-responsive-min.css">
+    <link rel="stylesheet" href="css/baby-blue.css">
+    <link rel="stylesheet" href="css/math.css">
+    <script src="js/page.js"></script>
+</head>
+
+<body>
+    <div class="header">
+        <h1>Online Gauss-Seidel</h1>
+        <h2>Easy, Fast, without Programing</h2>
+    </div>
+    <div class="content">
+        <h2 class="content-subhead">初始化</h2>
+        <p class="pure-form">在这里输入系数的增广矩阵，用空格隔开各项，你还可以修改标识字母为：
+            <input style="width: 2.5em;" id="letter" type="text" placeholder="x">
+        </p>
+        <div class="pure-form">
+            <fieldset>
+                <div class="pure-g">
+                    <div class="pure-u-1">
+                        <textarea id="matrix" rows="5" class="pure-u-1" style="resize:vertical;"></textarea>
+                        <legend>计算式<div id="error" class="error" hidden>error</div>
+                        </legend>
+                        <div id="formula" class="math">
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <legend>误差设置</legend>
+                    <label for="deviation" class="math">ε&nbsp;=&nbsp;</label>
+                    <input id="deviation" class="pure-u-1 pure-u-sm-10-24" type="text" placeholder="1e-6">
+                </div>
+                <div>
+                    <legend>迭代上限设置</legend>
+                    <label for="upper" class="math">K&nbsp;=&nbsp;</label>
+                    <input id="upper" class="pure-u-1 pure-u-sm-10-24" type="number" placeholder="100" min="10">
+                </div>
+                <div>
+                    <legend>迭代初值设置</legend>
+                    <div id="iv">
+                        <label for="iv1" class="math"><i>x</i><sub><i>1</i></sub>&nbsp;=&nbsp;</label>
+                        <input id="iv1" style="width: 3.5em;" type="text" placeholder="0">
+                    </div>
+                </div>
+                <div class="pure-controls">
+                    <center>
+                        <label for="sort" class="pure-checkbox">
+                            <input id="sort" type="checkbox" checked>启用系数数值优化
+                        </label>
+                        <button id="start" type="button" class="pure-button pure-button-primary">开始迭代</button></center>
+                </div>
+            </fieldset>
+
+        </div>
+        <h2 class="content-subhead">计算结果<div id="result" class="pass" hidden>result</div></h2>
+        <table class="pure-table pure-table-horizontal math">
+            <thead>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+    <div class="footer">
+
+    </div>
+</body>
+
+</html>
