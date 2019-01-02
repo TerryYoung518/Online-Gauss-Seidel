@@ -61,12 +61,12 @@
                 upper = window.document.getElementById("upper").value;
             if (deviation !== '') {
                 me.deviation = parseFloat(deviation);
-            }else{
+            } else {
                 me.deviation = 1e-6;
             }
             if (upper !== '') {
                 me.upper = parseInt(upper);
-            }else{
+            } else {
                 me.upper = 100;
             }
             me.augmentedMatrix.eachdo(function (k) {
@@ -84,7 +84,7 @@
             this.errorEl.innerHTML = text;
             this.errorEl.hidden = false;
         },
-        reportResult: function (clas,text) {
+        reportResult: function (clas, text) {
             this.resultEl.innerHTML = text;
             this.resultEl.classList.remove('pass');
             this.resultEl.classList.remove('error');
@@ -93,21 +93,24 @@
         },
         createEquation: function (coefficient) {
             var eauation = window.document.createElement("div");
-            var str = '';
+            var str = '',
+                i = 0;
             eauation.style = "margin: .2em";
-            if (coefficient[0] === '1') {
-                str = str + this.createSub(this.letter, 1);
-            } else if (coefficient[0] === '0') {} else {
-                str = str + coefficient[0] + this.createSub(this.letter, 1);
+            while (coefficient[i] === '0' && i < coefficient.length - 2) i++;
+            if (coefficient[i] === '0' && i === coefficient.length - 2) str = str + '0';
+            if (coefficient[i] === '1') {
+                str = str + this.createSub(this.letter, i + 1);
+            } else if (coefficient[i] === '0') {} else {
+                str = str + coefficient[i] + this.createSub(this.letter, i + 1);
             }
-            for (var i = 1; i < coefficient.length - 1; i++) {
+            for (i++; i < coefficient.length - 1; i++) {
                 if (coefficient[i] === '1') {
                     str = str + '&nbsp;+&nbsp;' + this.createSub(this.letter, i + 1);
                 } else if (coefficient[i] === '0') {} else {
                     str = str + '&nbsp;+&nbsp;' + coefficient[i] + this.createSub(this.letter, i + 1);
                 }
             }
-            str = str + '&nbsp;=&nbsp;' + coefficient[coefficient.length - 1];
+            str = str + '&nbsp;=&nbsp;' + coefficient[i];
             eauation.innerHTML = str;
             this.formulaEl.appendChild(eauation);
         },
@@ -154,7 +157,9 @@
                 d = 0,
                 x = this.iv,
                 x1 = new Array;
-            x.eachdo(function(){x1.push(this)});
+            x.eachdo(function () {
+                x1.push(this)
+            });
             this.tableBodyEl.innerHTML = '';
             while (true) {
                 d = 0;
@@ -168,23 +173,25 @@
                     d = Math.max(abs(x[i] - x1[i]), d);
                 }
                 if (d < this.deviation) {
-                    this.reportResult('pass','计算通过Accepted');
+                    this.reportResult('pass', '计算通过Accepted');
                     break;
-                }else if(k>=this.upper){
-                    this.reportResult('error','计算结果未达到精度要求Failed');
+                } else if (k >= this.upper) {
+                    this.reportResult('error', '计算结果未达到精度要求Failed');
                     break;
                 }
                 k++;
                 x1 = new Array;
-                x.eachdo(function(){x1.push(this)});
-                this.putResult(k,x1);
+                x.eachdo(function () {
+                    x1.push(this)
+                });
+                this.putResult(k, x1);
             }
         },
         initTable: function () {
-            var tr  = window.document.createElement("tr"),
+            var tr = window.document.createElement("tr"),
                 str = '<th>#</th>';
-            for(var i=0;i<this.dimension;i++){
-                str = str + '<th><i>'+this.letter+'</i><sub><i>'+String(i+1)+'</i></sub></th>\n';
+            for (var i = 0; i < this.dimension; i++) {
+                str = str + '<th><i>' + this.letter + '</i><sub><i>' + String(i + 1) + '</i></sub></th>\n';
             }
             tr.innerHTML = str;
             this.tableHeadEl.innerHTML = '';
@@ -193,9 +200,9 @@
         },
         putResult: function (k, x) {
             var tr = window.document.createElement("tr"),
-                str = '<td>'+String(k)+'</td>\n';
-            x.eachdo(function(i){
-                str = str +'<td>'+String(x[i])+'</td>\n';
+                str = '<td>' + String(k) + '</td>\n';
+            x.eachdo(function (i) {
+                str = str + '<td>' + String(x[i]) + '</td>\n';
             });
             tr.innerHTML = str;
             this.tableBodyEl.appendChild(tr);
