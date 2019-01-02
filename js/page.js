@@ -100,13 +100,21 @@
             if (coefficient[i] === '0' && i === coefficient.length - 2) str = str + '0';
             if (coefficient[i] === '1') {
                 str = str + this.createSub(this.letter, i + 1);
-            } else if (coefficient[i] === '0') {} else {
+            } else if (coefficient[i] === '-1') {
+                str = str + '&nbsp;-&nbsp;' + this.createSub(this.letter, i + 1);
+            } else if (coefficient[i] === '0') {} else if (coefficient[i][0] === '-') {
+                str = str + '&nbsp;-&nbsp;' + coefficient[i].split('-')[1] + this.createSub(this.letter, i + 1);
+            } else {
                 str = str + coefficient[i] + this.createSub(this.letter, i + 1);
             }
             for (i++; i < coefficient.length - 1; i++) {
                 if (coefficient[i] === '1') {
                     str = str + '&nbsp;+&nbsp;' + this.createSub(this.letter, i + 1);
-                } else if (coefficient[i] === '0') {} else {
+                } else if (coefficient[i] === '-1') {
+                    str = str + '&nbsp;-&nbsp;' + this.createSub(this.letter, i + 1);
+                } else if (coefficient[i] === '0') {} else if (coefficient[i][0] === '-') {
+                    str = str + '&nbsp;-&nbsp;' + coefficient[i].split('-')[1] + this.createSub(this.letter, i + 1);
+                } else {
                     str = str + '&nbsp;+&nbsp;' + coefficient[i] + this.createSub(this.letter, i + 1);
                 }
             }
